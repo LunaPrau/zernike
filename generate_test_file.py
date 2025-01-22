@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 # Define the number of points in the point cloud
-num_points = 100
+num_points = 50
 
 # Generate random coordinates for x, y, z within a given range
 x = np.random.uniform(-10, 10, num_points)
@@ -10,7 +10,7 @@ y = np.random.uniform(-10, 10, num_points)
 z = np.random.uniform(-10, 10, num_points)
 
 # Generate random sizes for each point
-lj = np.random.uniform(0.1, 5.0, num_points)
+lj = np.ones(num_points) * 5
 
 # Combine the data into a pandas DataFrame
 data = pd.DataFrame({
