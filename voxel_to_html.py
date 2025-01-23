@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 import numpy as np
 import json
 import json
-
+import logging
 
 def set_data(x, y, z):
     xx, yy, zz, i, j, k = [], [], [], [], [], []
@@ -27,7 +27,7 @@ def set_data(x, y, z):
     return xx, yy, zz, i, j, k
 
 
-def voxel_to_html(voxel_file, grid_size, html_file):
+def voxel_to_html(voxel_file, html_file, grid_size):
     name = Path(voxel_file).stem
     show_visited = False
 
@@ -55,13 +55,13 @@ def voxel_to_html(voxel_file, grid_size, html_file):
         fig.add_trace(
             go.Mesh3d(x=xx, y=yy, z=zz, i=i, j=j, k=k, showscale=True, color=next(colors), name=name, opacity=next(opacities),
                       showlegend=True))
-        print(f"Did {name}")
+        logging.debug(f"Did {name}")
 
     fig.update_layout(scene=dict(xaxis=dict(nticks=grid_size, range=[1, grid_size], ),
                                  yaxis=dict(nticks=grid_size, range=[1, grid_size], ),
                                  zaxis=dict(nticks=grid_size, range=[1, grid_size], ), ), showlegend=True)
 
-    print(f"Writing {html_file}")
+    logging.debug(f"Writing {html_file}")
     fig.write_html(html_file)
 
 
