@@ -15,20 +15,16 @@ def calculate_zernike_main(inputPath, outputDir, zernikeSettings):
     name, ext = (os.path.splitext(os.path.basename(inputPath)))
     if ext == ".txt":
         xyzArg = "-xyzlist"
-        pointCloudPath = inputPath
-        outputDescr = f"{outputDir}/{name}_descrOut.csv"
-        outputVoxel = f"{outputDir}/{name}_voxelOut.json"
     else:
         xyzArg = "-xyzfile"
-        pointCloudPath = convert_to_point_cloud_main(inputPath, ext)
-        outputDescr = f"{outputDir}/{name}_descrOut.csv"
-        outputVoxel = f"{outputDir}/{name}_voxelOut.json"
+    outputDescr = f"{outputDir}/{name}_descrOut.csv"
+    outputVoxel = f"{outputDir}/{name}_voxelOut.json"
     outputHtml = None
 
     if makeHtml:
-        command = f"{execPath} {xyzArg} {pointCloudPath} -descriptor_out {outputDescr} -voxelgrid_out {outputVoxel} -never_leave_neighbour 1"
+        command = f"{execPath} {xyzArg} {inputPath} -descriptor_out {outputDescr} -voxelgrid_out {outputVoxel} -never_leave_neighbour 1"
     else:
-        command = f"{execPath} {xyzArg} {pointCloudPath} -descriptor_out {outputDescr} -never_leave_neighbour 1"
+        command = f"{execPath} {xyzArg} {inputPath} -descriptor_out {outputDescr} -never_leave_neighbour 1"
     result = subprocess.run(command, shell=True, check=True, capture_output = True, text = True)
     logging.debug(result.stdout)
     # Log standard error, filter out empty lines
